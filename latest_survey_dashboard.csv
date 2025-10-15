@@ -1,0 +1,18 @@
+﻿id,name,age_group,gender,city,state,mobile,email,used,shampoo,usage_duration,satisfaction,reason,recommend
+1,Joseph Birla,18–25,Male,Coimbatore,Tamil Nadu,9994936063,joseph_birla@gmail.com,yes,Loreal paris,3 years,4 – Satisfied,Reduces Hair fall,Yes
+2,Haritha S,18–25,Female,Tiruchirappalli,Tamil Nadu,8220321779,harith122001@gmail.com,yes,Himalaya,1 year,5 – Very Satisfied,Conditioner like smoothness,Yes
+3,Thara Adalwin S,Under 18,Female,Tiruchirappalli,Tamil Nadu,8220321779,tharaadalwin2642008@gmail.com,yes,Herbal Powder,More than 3 years,5 – Very Satisfied,Quality at minimum cost ,Yes
+4,Sundar Raj A,51–65,Male,Kochi,Kerala,9944653206,sundarraj@gmail.com,yes,Godrej,More than 3 years,3 – Neutral,For Hair colouring ,No
+5,Monicka Manju,51–65,Female,Coimbatore,Tamil Nadu,9834556788,monicka_@gmail.com,yes,Dove,3 years,3 – Neutral,Reduces Hair fall,Yes
+6,Monicka Manju,51–65,Female,Coimbatore,Tamil Nadu,9994936063,monicka34@gmail.com,no,,,,,
+7,Amul Raj,51–65,Male,Thiruppur,Tamil Nadu,9934567892,amulsj@gmail.com,yes,Godrej,More than 3 years,5 – Very Satisfied,Hair colouring,No
+8,Leema Princy A,18–25,Female,Kottayam,Kerala,9934567892,leems_052002@gmail.com,yes,Loreal paris,3 years,4 – Satisfied,Conditioner like smoothness,Yes
+9,Sujith Kumar L,18–25,Male,Chennai,Tamil Nadu,9003434307,sk28@gmail.com,yes,Himalaya,2 years,3 – Neutral,Dandruf removal,No
+10,Sujith Kumar L,26–35,Male,Chennai,Tamil Nadu,9003434307,sujith234@gmail.com,yes,Himalaya,Less than 6 months,1 – Very Dissatisfied,Suggested,No
+11,Ananthi S,36–50,Female,Cuddalore,Tamil Nadu,9443459023,ananthi23@gmail.com,yes,Avelia,More than 3 years,5 – Very Satisfied,Avoids Hair splitting,Yes
+12,Ananthi S,36–50,Female,Palakkad,Kerala,8923579023,ananthi234@gmail.com,yes,Avelia,More than 3 years,4 – Satisfied,Avoids Hair splitting,Yes
+13,Immaculate Cladiya,26–35,Female,Tirunelveli,Tamil Nadu,9839459623,imma@gmail.com,yes,Dove,3 years,3 – Neutral,Reduces Hair fall,Yes
+14,Gayathree V,Under 18,Female,Gurugram ,Hyderabad,8923576902,gayu45@gmail.com,yes,Dove,Less than 6 months,1 – Very Dissatisfied,Suggested,No
+15,Akbar Ali,51–65,Female,Sanathnagar,Hyderabad,8945789034,akbar34@gmail.com,yes,Godrej,Less than 6 months,1 – Very Dissatisfied,Suggested,No
+16,Sierra ,26–35,Female,Coimbatore,Tamil Nadu,9994936063,seirra@gmail.com,yes,Dove,More than 3 years,3 – Neutral,Conditioner like quality,Yes
+17,Manisha chaudry,Under 18,Female,Theni,Tamil Nadu,8250567823,manisha.chaudry@gmail.com,yes,Avelia,2 years,4 – Satisfied,promotes Hair growth,Yes
