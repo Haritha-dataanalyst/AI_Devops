@@ -1,55 +1,99 @@
 from flask import Flask, render_template, request, redirect, flash
-import sqlite3, csv, os
+import mysql.connector
+from mysql.connector import Error
+import os
 import pandas as pd
 import plotly.express as px
 import matplotlib
-#matplotlib.use('Agg')
+# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+import csv
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+#app.secret_key = 'your_secret_key'
 
-DB_FILE = 'shampoo_satisfaction_form_and_insights_using_flask_july9/survey_dashboard.db'
-CSV_FILE = 'shampoo_satisfaction_form_and_insights_using_flask_july9/latest_survey_dashboard.csv'
+# --- MySQL Configuration ---
+DB_HOST = os.environ.get('MYSQL_HOST')
+DB_USER = os.environ.get('MYSQL_USER')
+DB_PASSWORD = os.environ.get('MYSQL_PASSWORD')
+DB_NAME = os.environ.get('MYSQL_DB')
+
+CSV_FILE = 'latest_survey_dashboard.csv'  # optional local CSV
 
 # --- DB Setup ---
 def create_db():
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS responses (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT, age_group TEXT, gender TEXT,
-            city TEXT, state TEXT, mobile TEXT, email TEXT,
-            used TEXT, shampoo TEXT, usage_duration TEXT,
-            satisfaction TEXT, reason TEXT, recommend TEXT
+    try:
+        conn = mysql.connector.connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_NAME
         )
-    ''
-
-)
-    conn.commit()
-    conn.close()
+        c = conn.cursor()
+        c.execute('''
+            CREATE TABLE IF NOT EXISTS responses (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255),
+                age_group VARCHAR(50),
+                gender VARCHAR(50),
+                city VARCHAR(100),
+                state VARCHAR(100),
+                mobile VARCHAR(20),
+                email VARCHAR(255),
+                used VARCHAR(10),
+                shampoo VARCHAR(255),
+                usage_duration VARCHAR(50),
+                satisfaction VARCHAR(10),
+                reason TEXT,
+                recommend VARCHAR(10)
+            )
+        ''')
+        conn.commit()
+        c.close()
+        conn.close()
+    except Error as e:
+        print("Error creating MySQL table:", e)
 
 create_db()
 
 # --- Helper Functions ---
+def get_connection():
+    return mysql.connector.connect(
+        host=DB_HOST,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        database=DB_NAME
+    )
+
 def is_email_already_used(email):
-    with sqlite3.connect(DB_FILE) as conn:
+    try:
+        conn = get_connection()
         c = conn.cursor()
-        c.execute("SELECT * FROM responses WHERE LOWER(email)=?", (email.lower(),))
-        return c.fetchone() is not None
+        c.execute("SELECT * FROM responses WHERE LOWER(email)=%s", (email.lower(),))
+        result = c.fetchone()
+        c.close()
+        conn.close()
+        return result is not None
+    except Error as e:
+        print("Error checking email:", e)
+        return False
 
 def export_db_to_csv():
-    with sqlite3.connect(DB_FILE) as conn:
+    try:
+        conn = get_connection()
         c = conn.cursor()
         c.execute("SELECT * FROM responses")
         rows = c.fetchall()
-        headers = [description[0] for description in c.description]
-    with open(CSV_FILE, mode='w', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
-        writer.writerows(rows)
+        headers = [i[0] for i in c.description]
+        c.close()
+        conn.close()
+        with open(CSV_FILE, mode='w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
+            writer.writerows(rows)
+    except Error as e:
+        print("Error exporting CSV:", e)
 
 def univariate(data, var):
     df = data[var].value_counts().reset_index(name="Count").rename(columns={"index": var})
@@ -101,14 +145,19 @@ def survey_form():
             for f in ['usage_duration', 'satisfaction', 'reason', 'recommend']:
                 data[f] = request.form.get(f)
 
-        with sqlite3.connect(DB_FILE) as conn:
+        try:
+            conn = get_connection()
             c = conn.cursor()
             c.execute('''
                 INSERT INTO responses (name, age_group, gender, city, state, mobile, email,
                 used, shampoo, usage_duration, satisfaction, reason, recommend)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ''', tuple(data.values()))
             conn.commit()
+            c.close()
+            conn.close()
+        except Error as e:
+            print("Error inserting survey response:", e)
 
         export_db_to_csv()
         return redirect('/thankyou')
@@ -176,7 +225,7 @@ def dashboard():
     )
     charts['location'] = fig.to_html(full_html=False)
 
-    # --- WordCloud ---
+    # --- WordCloud (optional) ---
     '''os.makedirs('static/charts', exist_ok=True)
     text = ' '.join(df['reason'].dropna().astype(str))
     wordcloud = WordCloud(width=600, height=400, background_color='white', colormap='viridis').generate(text)
