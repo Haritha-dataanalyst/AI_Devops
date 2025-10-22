@@ -1,0 +1,12 @@
+# railway.yaml (MUST be at the root of AI_Devops repo)
+$schema: https://railway.app/railway.schema.json
+environments:
+  production:
+    services:
+      # This is the name of the service to configure
+      AI_Devops:
+        # 1. FIX: Tells Railway to look inside this subfolder for all files
+        rootDirectory: weight_prediction_using_ML_and_flask
+        
+        # 2. FIX: Overrides the incorrect 'python main.py' to use the correct Gunicorn command
+        startCommand: gunicorn app:app
