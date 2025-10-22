@@ -1,0 +1,1 @@
+web: gunicorn weight_prediction_using_ML_and_flask.app:app

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Height-Weight Predictor</title>
+    <style>
+        body {
+            background-color: #f5f9ff;
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn {
+            width: 48%;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #007bff;
+            color: white;
+        }
+        .result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+        }
+        .error {
+            margin-top: 15px;
+            font-size: 16px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎯 Predict Your Weight from Height</h2>
+        <form method="POST">
+            <input type="text" name="height" placeholder="Height in cm" value="{{ height }}">
+            <div class="btn-container">
+                <button class="btn btn-primary" name="predict">🔎 Predict</button>
+                <button class="btn btn-secondary" name="reset">🔄 Reset</button>
+            </div>
+        </form>
+        {% if prediction %}
+            <div class="result">Predicted Weight: <strong>{{ prediction | round(2) }} kg</strong></div>
+        {% endif %}
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
