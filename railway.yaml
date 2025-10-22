@@ -9,4 +9,4 @@ environments:
         rootDirectory: weight_prediction_using_ML_and_flask
         
         # 2. FIX: Overrides the incorrect 'python main.py' to use the correct Gunicorn command
-        startCommand: gunicorn app:app
+        startCommand: gunicorn weight_prediction_using_ML_and_flask.app:app
