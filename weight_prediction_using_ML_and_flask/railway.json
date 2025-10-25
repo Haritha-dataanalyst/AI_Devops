@@ -1,17 +1,17 @@
-# railway.yaml
-# Configuration file for Railway deployment
-# Ensures Flask app runs correctly using Python build environment
-
-build:
-  # Installs all dependencies from requirements.txt
-  command: "pip install -r requirements.txt"
-
-start:
-  # Starts the Flask app
-  command: "python app.py"
-
-services:
-  - name: weight-prediction-flask-app
-    envs:
-      - key: PORT
-        value: 5000
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "buildCommand": "pip install -r requirements.txt"
+  },
+  "deploy": {
+    "startCommand": "python app.py"
+  },
+  "services": [
+    {
+      "name": "weight-prediction-flask-app",
+      "envs": {
+        "PORT": "5000"
+      }
+    }
+  ]
+}
