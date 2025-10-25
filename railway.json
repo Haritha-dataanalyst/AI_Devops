@@ -1,0 +1,13 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "buildCommand": "pip install -r weight_prediction_using_ML_and_flask/requirements.txt"
+  },
+  "deploy": {
+    "startCommand": "gunicorn weight_prediction_using_ML_and_flask.app:app"
+  },
+  "service": {
+    "name": "weight-prediction-flask-app",
+    "rootDirectory": "weight_prediction_using_ML_and_flask"
+  }
+}
