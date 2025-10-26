@@ -4,11 +4,11 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
+import os
 
 app = Flask(__name__)
 
 # Load and prepare real data
-#df = pd.read_csv('weight_prediction_using_ML_and_flask/NHANES_17_18_modified_data.csv')
 df = pd.read_csv('NHANES_17_18_modified_data.csv')
 
 X = df[['height']]
@@ -43,5 +43,13 @@ def index():
 
     return render_template('index.html', prediction=prediction, error=error, height=height)
 
+#if __name__ == '__main__':
+    #app.run(debug=True)
+
+import os
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Use 0.0.0.0 to listen on all public IPs
+    # Use the PORT environment variable provided by Railway (or default to 5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
