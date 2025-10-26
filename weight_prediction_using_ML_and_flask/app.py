@@ -8,7 +8,8 @@ from sklearn.metrics import mean_absolute_error
 app = Flask(__name__)
 
 # Load and prepare real data
-df = pd.read_csv('weight_prediction_using_ML_and_flask/NHANES_17_18_modified_data.csv')
+#df = pd.read_csv('weight_prediction_using_ML_and_flask/NHANES_17_18_modified_data.csv')
+df = pd.read_csv('NHANES_17_18_modified_data.csv')
 
 X = df[['height']]
 y = df['weight']
