@@ -1,5 +1,6 @@
-﻿flask
+gunicorn
+flask
 pandas
 numpy
 scikit-learn
-gunicorn
+
